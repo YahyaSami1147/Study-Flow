@@ -207,3 +207,78 @@ Requirements:
 Pay particular attention to React effect dependencies and cleanup.
 
 After implementation, explain how the timer state works and point out anything I should manually test.
+
+Prompt 6 
+
+Improve the existing StudyFlow application's visual system.
+
+Add:
+
+* Light mode.
+* Dark mode.
+* Theme persistence using localStorage.
+* Responsive layout.
+* Consistent spacing.
+* Consistent typography.
+* Consistent button styles.
+* Consistent cards and form controls.
+* Accessible color contrast.
+* Mobile-friendly navigation.
+
+Important:
+
+Do not rewrite the application from scratch.
+
+First inspect the existing CSS/components and improve them incrementally.
+
+Avoid hardcoding the same colors and spacing values repeatedly where CSS variables can provide a cleaner solution.
+
+Do not change existing application functionality.
+
+After implementation, identify three visual or UX areas that I should manually review rather than assuming the generated result is perfect.
+
+prompt 7 
+Continue working on the existing StudyFlow React application.
+
+Implement the Subjects management feature without rewriting existing working functionality.
+
+Users should be able to:
+
+* Create a subject.
+* Edit a subject.
+* Delete a subject.
+* View all subjects.
+* Assign tasks and notes to subjects.
+* See basic information about each subject, such as the number of tasks and total study time associated with it.
+
+Each subject should contain:
+
+* id
+* name
+* description
+* createdAt
+
+Requirements:
+
+* Persist subjects using the existing localStorage/data persistence architecture.
+* Validate that the subject name is not empty.
+* Prevent duplicate subject names where appropriate.
+* Provide clear feedback when a subject is created, edited, or deleted.
+* Handle deletion safely when existing tasks or notes are associated with the subject.
+* Do not leave broken subject references in tasks or notes.
+* Reuse existing UI components such as buttons, forms, cards, modals, and empty states.
+* Keep the implementation responsive.
+* Keep business/data logic separate from presentation logic where practical.
+* Do not duplicate localStorage logic if a reusable utility already exists.
+* Do not break the Dashboard, Tasks, Notes, or existing application routing.
+
+Before writing code, inspect the existing project structure and data models.
+
+After implementation:
+
+1. Explain which files were changed.
+2. Explain how subject relationships with tasks and notes work.
+3. Identify any areas that I should manually test.
+4. Identify at least two areas where manual refactoring or improvement could be performed after reviewing the AI-generated implementation.
+
+Do not unnecessarily rewrite existing components.
