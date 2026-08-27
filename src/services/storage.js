@@ -2,6 +2,7 @@ const TASKS_KEY = 'studyflow_tasks'
 const SUBJECTS_KEY = 'studyflow_subjects'
 const SESSIONS_KEY = 'studyflow_sessions'
 const NOTES_KEY = 'studyflow_notes'
+const ACTIVE_SESSION_KEY = 'studyflow_active_session'
 
 function safeParse(value, fallback) {
   try {
@@ -41,6 +42,19 @@ export function getNotes() {
 
 export function saveNotes(notes) {
   localStorage.setItem(NOTES_KEY, JSON.stringify(notes))
+}
+
+export function getActiveSession() {
+  const raw = localStorage.getItem(ACTIVE_SESSION_KEY)
+  return safeParse(raw, null)
+}
+
+export function saveActiveSession(active) {
+  if (active == null) {
+    localStorage.removeItem(ACTIVE_SESSION_KEY)
+    return
+  }
+  localStorage.setItem(ACTIVE_SESSION_KEY, JSON.stringify(active))
 }
 
 export function saveSessions(sessions) {

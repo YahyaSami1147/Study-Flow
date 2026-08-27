@@ -1,0 +1,15 @@
+.sessions-page { display:flex; flex-direction:column; gap:12px; }
+.sessions-header { display:flex; align-items:center; justify-content:space-between; }
+.session-control { border:1px solid var(--border); padding:12px; border-radius:8px; display:flex; flex-direction:column; gap:12px; max-width:720px; }
+.control-row { display:flex; gap:12px; align-items:center; }
+.control-row label { min-width:70px; }
+.timer-display { font-size:28px; font-weight:600; }
+.control-actions { display:flex; gap:8px; }
+.sessions-list { margin-top:12px; }
+.session-item { display:flex; justify-content:space-between; padding:8px; border:1px solid var(--border); border-radius:6px; margin-bottom:8px; }
+.session-item .left { display:flex; flex-direction:column; }
+.empty { color:var(--text); padding:12px; background:var(--code-bg); border:1px dashed var(--border); border-radius:6px; }
+
+@media (max-width: 800px) {
+  .session-control { width:100%; }
+}

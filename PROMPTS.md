@@ -169,3 +169,41 @@ Requirements:
 Keep the implementation simple and maintainable.
 
 After implementation, inspect the code and identify any areas where manual refactoring would improve readability or maintainability.
+
+Prompt 5 
+
+Implement the Study Sessions feature in the existing StudyFlow React application.
+
+Users should be able to:
+
+* Start a study session.
+* Select a subject.
+* Set or use a timer.
+* Pause/resume the timer.
+* Stop the session.
+* Save completed sessions.
+* View previous study sessions.
+* See total study time.
+
+Each saved session should contain:
+
+* id
+* subjectId
+* duration
+* startedAt
+* completedAt
+
+Requirements:
+
+* Use React state/hooks appropriately.
+* Ensure the timer behaves correctly when the component re-renders.
+* Prevent multiple timers from running simultaneously.
+* Clean up timers when the component unmounts.
+* Persist completed sessions using the existing localStorage architecture.
+* Handle browser refresh gracefully where practical.
+* Do not create duplicate intervals.
+* Keep timer logic separate from presentation logic where reasonable.
+
+Pay particular attention to React effect dependencies and cleanup.
+
+After implementation, explain how the timer state works and point out anything I should manually test.
