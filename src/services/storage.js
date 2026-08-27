@@ -1,8 +1,8 @@
-const TASKS_KEY = 'studyflow_tasks'
-const SUBJECTS_KEY = 'studyflow_subjects'
-const SESSIONS_KEY = 'studyflow_sessions'
-const NOTES_KEY = 'studyflow_notes'
-const ACTIVE_SESSION_KEY = 'studyflow_active_session'
+export const TASKS_KEY = 'studyflow_tasks'
+export const SUBJECTS_KEY = 'studyflow_subjects'
+export const SESSIONS_KEY = 'studyflow_sessions'
+export const NOTES_KEY = 'studyflow_notes'
+export const ACTIVE_SESSION_KEY = 'studyflow_active_session'
 
 function safeParse(value, fallback) {
   try {
@@ -70,4 +70,11 @@ export default {
   getNotes,
   saveNotes,
   saveSessions,
+  getActiveSession,
+  saveActiveSession,
+  TASKS_KEY,
+  SUBJECTS_KEY,
+  SESSIONS_KEY,
+  NOTES_KEY,
+  ACTIVE_SESSION_KEY,
 }

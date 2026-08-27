@@ -1,28 +1,23 @@
 import { useEffect, useMemo, useState } from 'react'
-import storage from '../services/storage'
+import storage, { SUBJECTS_KEY, TASKS_KEY, NOTES_KEY, SESSIONS_KEY } from '../services/storage'
+import useLocalStorage from '../hooks/useLocalStorage'
+import { makeId } from '../lib/id'
 import SubjectForm from '../components/subjects/SubjectForm'
 import SubjectItem from '../components/subjects/SubjectItem'
 import '../styles/subjects.css'
 
-function genId() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-}
-
 function Subjects() {
-  const [subjects, setSubjects] = useState(() => storage.getSubjects())
-  const [tasks, setTasks] = useState(() => storage.getTasks())
-  const [notes, setNotes] = useState(() => storage.getNotes())
-  const [sessions, setSessions] = useState(() => storage.getSessions())
+  const [subjects, setSubjects] = useLocalStorage(SUBJECTS_KEY, storage.getSubjects())
+  const [tasks, setTasks] = useLocalStorage(TASKS_KEY, storage.getTasks())
+  const [notes, setNotes] = useLocalStorage(NOTES_KEY, storage.getNotes())
+  const [sessions, setSessions] = useLocalStorage(SESSIONS_KEY, storage.getSessions())
 
   const [isCreating, setIsCreating] = useState(false)
   const [editing, setEditing] = useState(null)
   const [query, setQuery] = useState('')
   const [message, setMessage] = useState('')
 
-  useEffect(() => storage.saveSubjects(subjects), [subjects])
-  useEffect(() => storage.saveTasks(tasks), [tasks])
-  useEffect(() => storage.saveNotes(notes), [notes])
-  useEffect(() => storage.saveSessions(sessions), [sessions])
+  // persistence handled by useLocalStorage
 
   function showMessage(text) {
     setMessage(text)
@@ -45,7 +40,7 @@ function Subjects() {
       setSubjects((prev) => prev.map((s) => (s.id === subject.id ? { ...s, name, description: subject.description || '' } : s)))
       showMessage('Subject updated')
     } else {
-      const s = { id: genId(), name, description: subject.description || '', createdAt: new Date().toISOString() }
+      const s = { id: makeId(), name, description: subject.description || '', createdAt: new Date().toISOString() }
       setSubjects((prev) => [s, ...prev])
       showMessage('Subject created')
     }

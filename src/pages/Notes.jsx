@@ -1,25 +1,21 @@
 import { useEffect, useMemo, useState } from 'react'
-import storage from '../services/storage'
+import storage, { NOTES_KEY, SUBJECTS_KEY } from '../services/storage'
+import useLocalStorage from '../hooks/useLocalStorage'
+import { makeId } from '../lib/id'
 import NoteForm from '../components/notes/NoteForm'
 import NoteItem from '../components/notes/NoteItem'
 import '../styles/notes.css'
 
-function genId() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-}
-
 function Notes() {
-  const [notes, setNotes] = useState(() => storage.getNotes())
-  const [subjects, setSubjects] = useState(() => storage.getSubjects())
+  const [notes, setNotes] = useLocalStorage(NOTES_KEY, storage.getNotes())
+  const [subjects, setSubjects] = useLocalStorage(SUBJECTS_KEY, storage.getSubjects())
 
   const [query, setQuery] = useState('')
   const [editing, setEditing] = useState(null)
   const [isCreating, setIsCreating] = useState(false)
   const [message, setMessage] = useState('')
 
-  useEffect(() => {
-    storage.saveNotes(notes)
-  }, [notes])
+  // persistence handled by useLocalStorage
 
   function showMessage(text) {
     setMessage(text)
@@ -39,7 +35,7 @@ function Notes() {
       setNotes((prev) => prev.map((n) => (n.id === note.id ? { ...n, ...note, updatedAt: new Date().toISOString() } : n)))
       showMessage('Note updated')
     } else {
-      const n = { ...note, id: genId(), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
+      const n = { ...note, id: makeId(), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
       setNotes((prev) => [n, ...prev])
       showMessage('Note created')
     }

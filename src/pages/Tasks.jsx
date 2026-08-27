@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
-import storage from '../services/storage'
+import storage, { TASKS_KEY, SUBJECTS_KEY } from '../services/storage'
+import { makeId } from '../lib/id'
+import useLocalStorage from '../hooks/useLocalStorage'
 import TaskForm from '../components/tasks/TaskForm'
 import TaskItem from '../components/tasks/TaskItem'
 import '../styles/tasks.css'
 
-function generateId() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-}
+
 
 function Tasks() {
-  const [tasks, setTasks] = useState(() => storage.getTasks())
-  const [subjects, setSubjects] = useState(() => storage.getSubjects())
+  const [tasks, setTasks] = useLocalStorage(TASKS_KEY, storage.getTasks())
+  const [subjects, setSubjects] = useLocalStorage(SUBJECTS_KEY, storage.getSubjects())
 
   const [isCreating, setIsCreating] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
@@ -22,13 +22,7 @@ function Tasks() {
 
   const [message, setMessage] = useState('')
 
-  useEffect(() => {
-    storage.saveTasks(tasks)
-  }, [tasks])
-
-  useEffect(() => {
-    storage.saveSubjects(subjects)
-  }, [subjects])
+  // persistence is handled by useLocalStorage
 
   function showMessage(text) {
     setMessage(text)
@@ -53,7 +47,7 @@ function Tasks() {
     } else {
       const newTask = {
         ...task,
-        id: generateId(),
+        id: makeId(),
         completed: task.completed || false,
         createdAt: new Date().toISOString(),
       }

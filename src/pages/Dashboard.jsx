@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import StatCard from '../components/stats/StatCard'
 import RecentList from '../components/dashboard/RecentList'
-import storage from '../services/storage'
+import storage, { TASKS_KEY, SUBJECTS_KEY, SESSIONS_KEY } from '../services/storage'
+import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/dashboard.css'
 
 function formatMinutes(total) {
@@ -12,22 +13,22 @@ function formatMinutes(total) {
 }
 
 function Dashboard() {
-  const tasks = storage.getTasks()
-  const subjects = storage.getSubjects()
-  const sessions = storage.getSessions()
+  const [tasks] = useLocalStorage(TASKS_KEY, storage.getTasks())
+  const [subjects] = useLocalStorage(SUBJECTS_KEY, storage.getSubjects())
+  const [sessions] = useLocalStorage(SESSIONS_KEY, storage.getSessions())
 
   const stats = useMemo(() => {
     const totalTasks = tasks.length
     const completedTasks = tasks.filter((t) => t.completed).length
     const pendingTasks = totalTasks - completedTasks
 
-    // study time in minutes
+    // study time in minutes — prefer durationSeconds, fallback to durationMinutes or start/end
     const totalStudyMinutes = sessions.reduce((sum, s) => {
+      if (s.durationSeconds != null) return sum + Number(s.durationSeconds) / 60
       if (s.durationMinutes != null) return sum + Number(s.durationMinutes)
-      // fallback: compute from start/end ISO strings
-      if (s.start && s.end) {
-        const start = new Date(s.start)
-        const end = new Date(s.end)
+      if (s.startedAt && s.completedAt) {
+        const start = new Date(s.startedAt)
+        const end = new Date(s.completedAt)
         const mins = Math.max(0, Math.round((end - start) / 60000))
         return sum + mins
       }

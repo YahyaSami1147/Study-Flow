@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import storage from '../services/storage'
+import storage, { SUBJECTS_KEY, SESSIONS_KEY } from '../services/storage'
 import useStudyTimer from '../hooks/useStudyTimer'
+import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/sessions.css'
 
 function formatHMS(totalSeconds) {
@@ -11,14 +12,13 @@ function formatHMS(totalSeconds) {
 }
 
 function Sessions() {
-  const [subjects, setSubjects] = useState(() => storage.getSubjects())
-  const [sessions, setSessions] = useState(() => storage.getSessions())
+  const [subjects, setSubjects] = useLocalStorage(SUBJECTS_KEY, storage.getSubjects())
+  const [sessions, setSessions] = useLocalStorage(SESSIONS_KEY, storage.getSessions())
+  const [selectedSubject, setSelectedSubject] = useState('')
 
   const { seconds, isRunning, isPaused, start, pause, resume, stop, active } = useStudyTimer()
 
-  useEffect(() => {
-    storage.saveSessions(sessions)
-  }, [sessions])
+  // sessions are persisted via useLocalStorage
 
   function handleStart(subjectId) {
     start(subjectId)
@@ -50,8 +50,8 @@ function Sessions() {
 
       <section className="session-control">
         <div className="control-row">
-          <label>Subject</label>
-          <select defaultValue="" aria-label="Select subject" id="session-subject">
+          <label htmlFor="session-subject">Subject</label>
+          <select id="session-subject" value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} aria-label="Select subject">
             <option value="">General</option>
             {subjects.map((s) => (
               <option key={s.id} value={s.id}>{s.name}</option>
@@ -63,10 +63,7 @@ function Sessions() {
 
         <div className="control-actions">
           {!isRunning && !isPaused && (
-            <button className="primary" onClick={() => {
-              const sel = document.getElementById('session-subject')
-              handleStart(sel?.value || null)
-            }}>Start</button>
+            <button className="primary" onClick={() => handleStart(selectedSubject || null)}>Start</button>
           )}
 
           {isRunning && (

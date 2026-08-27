@@ -282,3 +282,48 @@ After implementation:
 4. Identify at least two areas where manual refactoring or improvement could be performed after reviewing the AI-generated implementation.
 
 Do not unnecessarily rewrite existing components.
+
+
+Prompt 8
+
+Act as a senior React developer reviewing the StudyFlow project.
+
+Do not modify the code yet.
+
+Inspect the existing project and identify:
+
+1. Duplicated code.
+2. Components that are too large.
+3. Unnecessary React state.
+4. Incorrect or unnecessary useEffect dependencies.
+5. Potential localStorage bugs.
+6. Possible race conditions or stale state.
+7. Poor naming.
+8. Accessibility problems.
+9. Responsive design problems.
+10. Unnecessary dependencies.
+11. Performance problems.
+12. Security concerns.
+13. Logic that should be extracted into reusable functions/hooks.
+14. UI logic mixed with data/business logic.
+15. Any code that is difficult for another developer to understand.
+
+Rank the findings by severity:
+
+* Critical
+* High
+* Medium
+* Low
+
+Do not change anything.
+
+For each issue, explain:
+
+* Where it occurs.
+* Why it is a problem.
+* What you recommend changing.
+* Whether the change could affect existing functionality.
+
+Wait for my approval before modifying the code.
+
+
