@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Dropdown from '../ui/Dropdown'
 
 function TaskForm({ task = null, subjects = [], onSave, onCancel, onError }) {
   const [title, setTitle] = useState(task?.title || '')
@@ -38,22 +39,27 @@ function TaskForm({ task = null, subjects = [], onSave, onCancel, onError }) {
 
       <div className="form-row">
         <label htmlFor="task-subject">Subject</label>
-        <select id="task-subject" value={subjectId || ''} onChange={(e) => setSubjectId(e.target.value)}>
-          <option value="">None</option>
-          {subjects.map((s) => (
-            <option key={s.id} value={s.id}>{s.name}</option>
-          ))}
-        </select>
+        <Dropdown
+          id="task-subject"
+          label="Subject"
+          value={subjectId}
+          onChange={setSubjectId}
+          options={[{ value: '', label: 'None' }, ...subjects.map((s) => ({ value: s.id, label: s.name }))]}
+          placeholder="None"
+        />
       </div>
 
       <div className="form-row small-grid">
         <div>
           <label>Priority</label>
-          <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
+          <Dropdown
+            id="task-priority"
+            label="Priority"
+            value={priority}
+            onChange={setPriority}
+            options={[{ value: 'low', label: 'Low' }, { value: 'medium', label: 'Medium' }, { value: 'high', label: 'High' }]}
+            placeholder="Priority"
+          />
         </div>
         <div>
           <label>Due</label>

@@ -13,14 +13,36 @@
 
 .tasks-controls {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
-.tasks-controls input,
-.tasks-controls select {
-  min-width: 150px;
+.tasks-controls .search {
+  flex: 1 1 420px;
+  min-width: 180px;
 }
+
+.filter-group { display:flex; gap:8px; align-items:center }
+.filter-pill {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 8px 34px 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 96%, transparent), var(--color-surface));
+  min-width: 160px;
+  position: relative;
+}
+.filter-pill::-ms-expand { display:none }
+.filter-pill { background-image: none }
+.filter-pill { background-position: right 12px center }
+.filter-pill { padding-right: 36px }
+.filter-pill { background-repeat: no-repeat }
+.filter-pill { background-size: 12px }
+
+/* add small chevron using SVG data URI */
+.filter-pill { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>"); background-position: right 12px center; background-repeat: no-repeat }
 
 .tasks-content {
   display: flex;
@@ -77,8 +99,9 @@
   padding: 16px;
   border: 1px solid var(--color-border);
   border-radius: 16px;
-  margin-bottom: 10px;
-  background: var(--color-surface);
+  margin-bottom: 12px;
+  background: linear-gradient(180deg, var(--color-surface), color-mix(in srgb, var(--color-surface) 96%, transparent));
+  box-shadow: var(--shadow-sm);
 }
 
 .task-item.done .title {
@@ -87,9 +110,9 @@
 }
 
 .task-item .left {
-  width: 28px;
+  width: 42px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding-top: 4px;
 }
 
@@ -116,6 +139,16 @@
   color: var(--color-muted);
   margin-top: 8px;
 }
+
+/* custom checkbox */
+.check { display:inline-grid; place-items:center }
+.check input { appearance:none; -webkit-appearance:none; width:22px; height:22px; border-radius:6px; border:1px solid var(--color-border); background: transparent; display:inline-grid; place-items:center; cursor:pointer }
+.check .checkmark { width:22px; height:22px; display:inline-block; border-radius:6px }
+.check input:checked { background: linear-gradient(180deg, var(--color-primary), var(--color-primary-strong)); border-color: transparent; box-shadow: var(--shadow-sm); }
+.check input:checked + .checkmark { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>"); background-position: center; background-repeat: no-repeat }
+
+.task-item .title { font-weight: 600; font-size: 16px }
+.task-item .actions button { padding: 6px 10px }
 
 .task-item .actions {
   display: flex;

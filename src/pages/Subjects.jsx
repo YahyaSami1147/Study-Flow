@@ -123,8 +123,10 @@ function Subjects() {
       </div>
 
       {isCreating && (
-        <div className="subject-form-wrap">
-          <SubjectForm key={editing ? editing.id : 'new'} subject={editing} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} onError={showMessage} />
+        <div className="modal-backdrop" role="dialog" aria-modal="true">
+          <div className="modal-card subject-form-wrap">
+            <SubjectForm key={editing ? editing.id : 'new'} subject={editing} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} onError={showMessage} />
+          </div>
         </div>
       )}
 

@@ -47,6 +47,25 @@
   color: transparent;
 }
 
+/* Modal backdrop and card styles used by forms */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(2,6,23,0.18), rgba(2,6,23,0.22));
+  z-index: 100;
+  padding: 28px;
+}
+.modal-card {
+  width: min(820px, calc(100vw - 48px));
+  background: color-mix(in srgb, var(--color-surface) 98%, transparent);
+  border: 1px solid var(--color-border);
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+}
+
 .top-actions {
   display: flex;
   align-items: center;

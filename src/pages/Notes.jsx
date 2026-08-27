@@ -102,8 +102,10 @@ function Notes() {
       </div>
 
       {isCreating && (
-        <div className="note-form-wrap">
-          <NoteForm key={editing ? editing.id : 'new'} note={editing} subjects={subjects} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} onError={showMessage} />
+        <div className="modal-backdrop" role="dialog" aria-modal="true">
+          <div className="modal-card note-form-wrap">
+            <NoteForm key={editing ? editing.id : 'new'} note={editing} subjects={subjects} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} onError={showMessage} />
+          </div>
         </div>
       )}
 

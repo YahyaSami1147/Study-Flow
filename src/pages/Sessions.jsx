@@ -3,6 +3,8 @@ import storage, { SUBJECTS_KEY, SESSIONS_KEY } from '../services/storage'
 import useStudyTimer from '../hooks/useStudyTimer'
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/sessions.css'
+import Dropdown from '../components/ui/Dropdown'
+import { useToast } from '../components/ui/ToastProvider'
 
 function formatHMS(totalSeconds) {
   const hrs = Math.floor(totalSeconds / 3600)
@@ -20,8 +22,11 @@ function Sessions() {
 
   // sessions are persisted via useLocalStorage
 
+  const toast = useToast()
+
   function handleStart(subjectId) {
     start(subjectId)
+    toast.show('Session started')
   }
 
   function handlePause() {
@@ -36,6 +41,7 @@ function Sessions() {
     const completed = stop()
     if (completed) {
       setSessions((prev) => [completed, ...prev])
+      toast.show('Session saved')
     }
   }
 
@@ -54,12 +60,14 @@ function Sessions() {
       <section className="session-control">
         <div className="control-row">
           <label htmlFor="session-subject">Subject</label>
-          <select id="session-subject" value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} aria-label="Select subject">
-            <option value="">General</option>
-            {subjects.map((s) => (
-              <option key={s.id} value={s.id}>{s.name}</option>
-            ))}
-          </select>
+          <Dropdown
+            id="session-subject"
+            label="Subject"
+            value={selectedSubject}
+            onChange={setSelectedSubject}
+            options={[{ value: '', label: 'General' }, ...subjects.map((s) => ({ value: s.id, label: s.name }))]}
+            placeholder="Select subject"
+          />
         </div>
 
         <div className="timer-display">{formatHMS(seconds)}</div>

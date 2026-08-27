@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Dropdown from '../ui/Dropdown'
 
 function NoteForm({ note = null, subjects = [], onSave, onCancel, onError }) {
   const [title, setTitle] = useState(note?.title || '')
@@ -34,12 +35,14 @@ function NoteForm({ note = null, subjects = [], onSave, onCancel, onError }) {
 
       <div className="form-row">
         <label htmlFor="note-subject">Subject</label>
-        <select id="note-subject" value={subjectId || ''} onChange={(e) => setSubjectId(e.target.value)}>
-          <option value="">None</option>
-          {subjects.map((s) => (
-            <option key={s.id} value={s.id}>{s.name}</option>
-          ))}
-        </select>
+        <Dropdown
+          id="note-subject"
+          label="Subject"
+          value={subjectId}
+          onChange={setSubjectId}
+          options={[{ value: '', label: 'None' }, ...subjects.map((s) => ({ value: s.id, label: s.name }))]}
+          placeholder="None"
+        />
       </div>
 
       <div className="form-actions">

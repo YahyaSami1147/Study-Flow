@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState, useRef } from 'react'
 import { useConfirm } from '../components/ui/ConfirmModal'
+import { useToast } from '../components/ui/ToastProvider'
 import storage, { TASKS_KEY, SUBJECTS_KEY } from '../services/storage'
 import { makeId } from '../lib/id'
 import useLocalStorage from '../hooks/useLocalStorage'
 import TaskForm from '../components/tasks/TaskForm'
 import TaskItem from '../components/tasks/TaskItem'
 import '../styles/tasks.css'
+import Dropdown from '../components/ui/Dropdown'
 
 
 
@@ -21,21 +23,12 @@ function Tasks() {
   const [filterPriority, setFilterPriority] = useState('all')
   const [sortBy, setSortBy] = useState('dueDate')
 
-  const [message, setMessage] = useState('')
-  const messageRef = useRef(null)
+  const toast = useToast()
   const confirm = useConfirm()
 
   // persistence is handled by useLocalStorage
 
-  function showMessage(text) {
-    setMessage(text)
-    if (messageRef.current) clearTimeout(messageRef.current)
-    messageRef.current = setTimeout(() => setMessage(''), 3000)
-  }
-
-  useEffect(() => {
-    return () => { if (messageRef.current) clearTimeout(messageRef.current) }
-  }, [])
+  function showMessage(text) { toast.show(text) }
 
   function handleCreate() {
     setEditingTask(null)
@@ -124,22 +117,33 @@ function Tasks() {
       </header>
 
       <div className="tasks-controls">
-        <input aria-label="Search tasks" placeholder="Search tasks" value={query} onChange={(e) => setQuery(e.target.value)} />
-        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} aria-label="Filter by status">
-          <option value="all">All</option>
-          <option value="pending">Pending</option>
-          <option value="completed">Completed</option>
-        </select>
-        <select value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)} aria-label="Filter by priority">
-          <option value="all">All priorities</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-        </select>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} aria-label="Sort tasks">
-          <option value="dueDate">Sort by due date</option>
-          <option value="priority">Sort by priority</option>
-        </select>
+        <input className="search" aria-label="Search tasks" placeholder="Search tasks" value={query} onChange={(e) => setQuery(e.target.value)} />
+        <div className="filter-group">
+          <Dropdown
+            id="filter-status"
+            label="Status"
+            value={filterStatus}
+            onChange={setFilterStatus}
+            options={[{ value: 'all', label: 'All' }, { value: 'pending', label: 'Pending' }, { value: 'completed', label: 'Completed' }]}
+            placeholder="Status"
+          />
+          <Dropdown
+            id="filter-priority"
+            label="Priority"
+            value={filterPriority}
+            onChange={setFilterPriority}
+            options={[{ value: 'all', label: 'All priorities' }, { value: 'low', label: 'Low' }, { value: 'medium', label: 'Medium' }, { value: 'high', label: 'High' }]}
+            placeholder="Priority"
+          />
+        </div>
+        <Dropdown
+          id="sort-by"
+          label="Sort"
+          value={sortBy}
+          onChange={setSortBy}
+          options={[{ value: 'dueDate', label: 'Due date' }, { value: 'priority', label: 'Priority' }]}
+          placeholder="Sort"
+        />
       </div>
 
       <div className="tasks-content">
@@ -181,19 +185,21 @@ function Tasks() {
       </div>
 
       {(isCreating || editingTask) && (
-        <div className="task-form-wrap">
-          <TaskForm
-            key={editingTask ? editingTask.id : 'new'}
-            task={editingTask}
-            subjects={subjects}
-            onCancel={() => { setIsCreating(false); setEditingTask(null) }}
-            onSave={handleSave}
-            onError={showMessage}
-          />
+        <div className="modal-backdrop" role="dialog" aria-modal="true">
+          <div className="modal-card task-form-wrap">
+            <TaskForm
+              key={editingTask ? editingTask.id : 'new'}
+              task={editingTask}
+              subjects={subjects}
+              onCancel={() => { setIsCreating(false); setEditingTask(null) }}
+              onSave={handleSave}
+              onError={showMessage}
+            />
+          </div>
         </div>
       )}
 
-      {message && <div className="toast" role="status">{message}</div>}
+      {/* toast provider handles toasts */}
     </div>
   )
 }

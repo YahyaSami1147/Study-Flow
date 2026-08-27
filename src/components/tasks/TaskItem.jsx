@@ -5,7 +5,10 @@ function TaskItem({ task, subjects = [], onEdit, onDelete, onToggleComplete }) {
   return (
     <div className={`task-item ${task.completed ? 'done' : ''}`}>
       <div className="left">
-        <input type="checkbox" checked={!!task.completed} onChange={onToggleComplete} aria-label={`Mark ${task.title} completed`} />
+        <label className="check">
+          <input type="checkbox" checked={!!task.completed} onChange={onToggleComplete} aria-label={`Mark ${task.title} completed`} />
+          <span className="checkmark" aria-hidden="true" />
+        </label>
       </div>
       <div className="main">
         <div className="title-row">

@@ -91,7 +91,10 @@ function Layout() {
             <span className="wordmark">StudyFlow</span>
           </div>
           <nav className="top-actions" aria-label="Appearance">
-            <ThemeToggle />
+            <ThemeToggle size="lg" />
+            <button className="profile-btn" title="Account" aria-label="Account">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5z"/><path d="M4 22c0-3.3 4.3-6 8-6s8 2.7 8 6"/></svg>
+            </button>
           </nav>
         </header>
 
