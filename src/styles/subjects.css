@@ -1,19 +1,75 @@
-.subjects-page { display:flex; flex-direction:column; gap:12px; }
-.subjects-header { display:flex; justify-content:space-between; align-items:center; }
-.subjects-controls input { padding:8px; border-radius:6px; border:1px solid var(--border); width:100%; max-width:420px; }
-.subjects-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
-.subject-card { padding:12px; border-radius:var(--radius); }
-.subject-header { display:flex; justify-content:space-between; align-items:center; }
-.subject-desc { margin-top:8px; color:var(--text); }
-.subject-meta { margin-top:12px; display:flex; gap:12px; color:var(--text); font-size:13px; }
-.subject-form-wrap { position:fixed; right:18px; bottom:18px; width:420px; background:var(--bg); border:1px solid var(--border); padding:12px; border-radius:8px; box-shadow:var(--shadow); }
-.subject-form .form-row { margin-bottom:8px; display:flex; flex-direction:column; }
-.empty { color:var(--text); padding:12px; background:var(--code-bg); border:1px dashed var(--border); border-radius:6px; }
+.subjects-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.subjects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.subjects-controls input {
+  width: 100%;
+  max-width: 420px;
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.subject-card {
+  padding: 18px;
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.subject-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.subject-card h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.subject-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.subject-desc {
+  margin-top: 8px;
+  color: var(--color-muted);
+  min-height: 1.4em;
+}
+
+.subject-meta {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
 
 @media (max-width: 1000px) {
-  .subjects-grid { grid-template-columns: repeat(2, 1fr); }
-  .subject-form-wrap { position:static; width:100%; box-shadow:none; border:none; padding:0; }
+  .subjects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
 @media (max-width: 600px) {
-  .subjects-grid { grid-template-columns: 1fr; }
+  .subjects-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,0 +1,213 @@
+.theme-toggle {
+  --toggle-w: 74px;
+  --toggle-h: 36px;
+  --knob: 28px;
+  --pad: 4px;
+  --night: #141c2c;
+  --slide: calc(var(--toggle-w) - var(--knob) - (var(--pad) * 2));
+
+  width: var(--toggle-w);
+  height: var(--toggle-h);
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(28, 22, 16, 0.08),
+    0 8px 18px rgba(16,24,40,0.06);
+  transition: box-shadow 0.5s ease;
+}
+
+.theme-toggle-lg {
+  --toggle-w: 96px;
+  --toggle-h: 44px;
+  --knob: 34px;
+  --pad: 5px;
+}
+
+.theme-toggle:hover,
+.theme-toggle:active {
+  background: transparent;
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.theme-toggle-sky {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(126,200,240,0.95) 0%, rgba(185,228,248,0.95) 48%, rgba(248,227,168,0.95) 100%);
+  transition: background 0.55s ease, transform 0.45s ease;
+}
+
+.theme-toggle.is-dark {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 22px rgba(8, 12, 24, 0.45);
+}
+
+.theme-toggle.is-dark .theme-toggle-sky {
+  background: linear-gradient(180deg, #0c1220 0%, var(--night) 58%, #1a2744 100%);
+}
+
+.theme-toggle-stars {
+  position: absolute;
+  inset: 0;
+}
+
+.theme-toggle-stars span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  transform: scale(0.2);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.theme-toggle-stars span:nth-child(1) { top: 8px; left: 11px; }
+.theme-toggle-stars span:nth-child(2) { top: 17px; left: 20px; width: 3px; height: 3px; transition-delay: 70ms; }
+.theme-toggle-stars span:nth-child(3) { top: 7px; left: 30px; transition-delay: 110ms; }
+.theme-toggle-stars span:nth-child(4) { bottom: 8px; left: 16px; transition-delay: 40ms; }
+.theme-toggle-stars span:nth-child(5) { top: 13px; left: 40px; width: 1.5px; height: 1.5px; transition-delay: 150ms; }
+
+.theme-toggle.is-dark .theme-toggle-stars span {
+  opacity: 0.9;
+  transform: scale(1);
+}
+
+.theme-toggle-cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 999px;
+  opacity: 0.88;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+}
+
+.theme-toggle-cloud.c1 {
+  width: 16px;
+  height: 7px;
+  right: 9px;
+  bottom: 7px;
+  box-shadow: 7px 0 0 1px rgba(255, 255, 255, 0.75);
+}
+
+.theme-toggle-cloud.c2 {
+  width: 11px;
+  height: 5px;
+  right: 20px;
+  top: 7px;
+  opacity: 0.7;
+}
+
+.theme-toggle.is-dark .theme-toggle-cloud {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.theme-toggle-knob {
+  position: absolute;
+  top: var(--pad);
+  left: var(--pad);
+  width: var(--knob);
+  height: var(--knob);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff4c4 0%, #ffcc4d 46%, #e39b12 100%);
+  box-shadow:
+    0 4px 10px rgba(16,24,40,0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1.15, 0.36, 1),
+    background 0.45s ease,
+    box-shadow 0.45s ease;
+  z-index: 2;
+}
+
+.theme-toggle.is-dark .theme-toggle-knob {
+  transform: translateX(var(--slide));
+  background: radial-gradient(circle at 38% 32%, #222b3b 0%, #0f1724 72%);
+  box-shadow:
+    0 6px 18px rgba(2,6,23,0.48),
+    0 0 20px rgba(150, 165, 255, 0.08);
+}
+
+.celestial {
+  width: 86%;
+  height: 86%;
+  overflow: visible;
+}
+
+.sun-core {
+  fill: #ffb703;
+}
+
+.sun-group,
+.moon-group {
+  transform-origin: 16px 16px;
+  transition: opacity 0.35s ease, transform 0.55s cubic-bezier(0.22, 1.15, 0.36, 1);
+}
+
+.sun-group {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.moon-group {
+  opacity: 0;
+  transform: rotate(-40deg) scale(0.35);
+}
+
+.moon-body {
+  fill: #f4ead6;
+}
+
+.theme-toggle.is-dark .sun-group {
+  opacity: 0;
+  transform: rotate(50deg) scale(0.25);
+}
+
+.theme-toggle.is-dark .moon-group {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.sun-rays {
+  animation: sun-spin 14s linear infinite;
+  transform-origin: 16px 16px;
+}
+
+.theme-toggle.is-dark .sun-rays {
+  animation: none;
+}
+
+@keyframes sun-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-knob,
+  .sun-group,
+  .moon-group,
+  .theme-toggle-sky,
+  .theme-toggle-cloud,
+  .theme-toggle-stars span {
+    transition: none;
+  }
+
+  .sun-rays {
+    animation: none;
+  }
+}

@@ -10,8 +10,8 @@ function SubjectItem({ subject, onEdit, onDelete, taskCount = 0, studySeconds = 
       <header className="subject-header">
         <h3>{subject.name}</h3>
         <div className="subject-controls">
-          <button onClick={onEdit}>Edit</button>
-          <button onClick={onDelete}>Delete</button>
+          <button type="button" className="btn-ghost" onClick={onEdit}>Edit</button>
+          <button type="button" className="btn-danger" onClick={onDelete}>Delete</button>
         </div>
       </header>
       <div className="subject-desc">{subject.description}</div>

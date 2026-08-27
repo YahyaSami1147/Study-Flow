@@ -1,15 +1,80 @@
-.sessions-page { display:flex; flex-direction:column; gap:12px; }
-.sessions-header { display:flex; align-items:center; justify-content:space-between; }
-.session-control { border:1px solid var(--border); padding:12px; border-radius:8px; display:flex; flex-direction:column; gap:12px; max-width:720px; }
-.control-row { display:flex; gap:12px; align-items:center; }
-.control-row label { min-width:70px; }
-.timer-display { font-size:28px; font-weight:600; }
-.control-actions { display:flex; gap:8px; }
-.sessions-list { margin-top:12px; }
-.session-item { display:flex; justify-content:space-between; padding:8px; border:1px solid var(--border); border-radius:6px; margin-bottom:8px; }
-.session-item .left { display:flex; flex-direction:column; }
-.empty { color:var(--text); padding:12px; background:var(--code-bg); border:1px dashed var(--border); border-radius:6px; }
+.sessions-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-@media (max-width: 800px) {
-  .session-control { width:100%; }
+.session-control {
+  border: 1px solid var(--color-border);
+  padding: 22px;
+  border-radius: var(--card-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 640px;
+  background: var(--color-surface);
+}
+
+.control-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.control-row label {
+  min-width: 80px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.control-row select {
+  flex: 1;
+}
+
+.timer-display {
+  font-family: var(--font-serif);
+  font-size: 52px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.control-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.sessions-list h2 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.sessions-list ul {
+  list-style: none;
+}
+
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.session-item .subject {
+  font-weight: 600;
+}
+
+.session-item .when,
+.session-item .time {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .timer-display {
+    font-size: 40px;
+  }
 }

@@ -2,13 +2,15 @@ import { useMemo } from 'react'
 import StatCard from '../components/stats/StatCard'
 import RecentList from '../components/dashboard/RecentList'
 import storage, { TASKS_KEY, SUBJECTS_KEY, SESSIONS_KEY } from '../services/storage'
+import { makeId } from '../lib/id'
 import useLocalStorage from '../hooks/useLocalStorage'
 import '../styles/dashboard.css'
 
 function formatMinutes(total) {
   if (!total) return '0m'
-  const hrs = Math.floor(total / 60)
-  const mins = total % 60
+  const rounded = Math.round(total)
+  const hrs = Math.floor(rounded / 60)
+  const mins = rounded % 60
   return hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`
 }
 
@@ -57,7 +59,15 @@ function Dashboard() {
       .slice(0, 6)
 
     const recentSessions = [...sessions]
-      .sort((a, b) => new Date(b.end || b.start || 0) - new Date(a.end || a.start || 0))
+      .map((s) => ({
+        ...s,
+        id: s.id || makeId(),
+        subjectName: (subjects.find((x) => x.id === s.subjectId) || {}).name || 'General',
+        durationMinutes: s.durationSeconds != null ? Math.round(Number(s.durationSeconds) / 60) : (s.durationMinutes || 0),
+        startedAt: s.startedAt || s.start,
+        completedAt: s.completedAt || s.end,
+      }))
+      .sort((a, b) => new Date(b.completedAt || b.startedAt || 0) - new Date(a.completedAt || a.startedAt || 0))
       .slice(0, 6)
 
     return {
@@ -72,11 +82,16 @@ function Dashboard() {
     }
   }, [tasks, sessions, subjects])
 
+  const completion = stats.totalTasks
+    ? Math.round((stats.completedTasks / stats.totalTasks) * 100)
+    : 0
+
   return (
     <div className="dashboard">
-      <header className="dashboard-header">
-        <h1>Dashboard</h1>
-        <p className="muted">Overview of your study productivity</p>
+      <header className="dashboard-header page-hero">
+        <p className="eyebrow">Today</p>
+        <h1>Your study desk</h1>
+        <p className="lede">A quiet view of tasks, time, and what comes next.</p>
       </header>
 
       <section className="stats-grid" aria-hidden={false}>
@@ -86,16 +101,19 @@ function Dashboard() {
         <StatCard title="Study Time" value={formatMinutes(stats.totalStudyMinutes)} />
         <StatCard title="Active Subjects" value={stats.activeSubjects} />
         <div className="progress-card">
-          <div className="stat-title">Productivity</div>
-          <div aria-hidden>
+          <div className="ring" style={{ '--p': completion }} aria-hidden="true">
+            <span>{completion}%</span>
+          </div>
+          <div className="progress-copy">
+            <div className="stat-title">Productivity</div>
             <progress
               max={Math.max(1, stats.totalTasks)}
               value={stats.completedTasks}
               className="progress"
             />
-          </div>
-          <div className="stat-sub">
-            {stats.completedTasks} of {stats.totalTasks} tasks completed
+            <div className="stat-sub">
+              {stats.completedTasks} of {stats.totalTasks} tasks completed
+            </div>
           </div>
         </div>
       </section>

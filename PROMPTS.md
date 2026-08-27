@@ -327,3 +327,344 @@ For each issue, explain:
 Wait for my approval before modifying the code.
 
 
+Prompt 9
+
+Perform a final engineering review of the completed StudyFlow React application.
+
+Do not immediately modify files.
+
+First inspect the entire application and create a testing checklist covering:
+
+* Application startup.
+* Navigation.
+* Creating tasks.
+* Editing tasks.
+* Deleting tasks.
+* Completing tasks.
+* Searching/filtering tasks.
+* Creating/editing/deleting notes.
+* Creating subjects.
+* Starting/stopping study sessions.
+* Timer behavior.
+* Dashboard statistics.
+* localStorage persistence.
+* Theme switching.
+* Responsive layout.
+* Form validation.
+* Empty states.
+* Error states.
+* Browser refresh behavior.
+
+Then inspect the source code for likely bugs.
+
+For every issue found, provide:
+
+* File.
+* Problem.
+* Reproduction scenario.
+* Severity.
+* Recommended fix.
+
+Do not modify the code until I approve the proposed fixes.
+
+Prompt Styling :
+The StudyFlow React application is now functionally complete.
+
+I want you to perform a final UI/UX styling and visual-polish pass across the ENTIRE existing application.
+
+IMPORTANT:
+
+* Do NOT rebuild the application.
+* Do NOT change the application's existing functionality.
+* Do NOT change the data structures, business logic, routing, localStorage behavior, task logic, notes logic, subjects logic, or study-session logic unless a change is absolutely necessary for a visual/UI issue.
+* Preserve all currently working features.
+* First inspect the entire existing project before making changes.
+* Work with the existing components and architecture.
+* Prefer improving existing CSS/components instead of creating unnecessary new dependencies.
+
+GOAL:
+
+Make StudyFlow look like a polished, modern, professional student productivity SaaS application suitable for an academic project demonstration.
+
+DESIGN STYLE:
+
+* Modern SaaS dashboard aesthetic.
+* Clean and professional.
+* Student-focused but not childish.
+* Strong visual hierarchy.
+* Spacious and uncluttered.
+* Consistent rounded cards and controls.
+* Subtle borders and shadows.
+* Professional typography.
+* Consistent spacing.
+* Clear primary and secondary actions.
+* Subtle hover and transition effects.
+* Avoid excessive animations.
+* Avoid overly complicated visual effects.
+
+Review and improve the following areas across the entire application:
+
+1. GLOBAL DESIGN SYSTEM
+
+Create or refine CSS variables for:
+
+* Primary color
+* Secondary/accent color
+* Background colors
+* Surface/card colors
+* Text colors
+* Muted text
+* Border colors
+* Success/warning/error colors
+* Border radius
+* Shadows
+* Spacing
+* Typography scale
+* Transition timing
+
+Ensure the same design tokens are reused throughout the application instead of repeatedly hardcoding values.
+
+2. LAYOUT
+
+Improve:
+
+* Main application layout
+* Sidebar
+* Header
+* Main content area
+* Page spacing
+* Content width
+* Section spacing
+* Alignment
+
+Make sure all pages feel like part of the same application.
+
+3. NAVIGATION
+
+Improve:
+
+* Sidebar navigation
+* Active navigation state
+* Hover states
+* Icons
+* Navigation spacing
+* Header controls
+
+Make navigation visually clear and easy to understand.
+
+4. DASHBOARD
+
+Improve the visual presentation of:
+
+* Statistic cards
+* Recent tasks
+* Upcoming tasks
+* Study-session information
+* Productivity statistics
+* Progress indicators
+* Empty states
+
+Make the dashboard feel like the main polished landing page of the application.
+
+5. TASKS
+
+Improve:
+
+* Task cards/list
+* Priority indicators
+* Completed state
+* Due-date presentation
+* Search
+* Filters
+* Sort controls
+* Add/edit task forms
+* Delete actions
+* Empty states
+
+Make task status and priority visually obvious without making the interface cluttered.
+
+6. NOTES
+
+Improve:
+
+* Note cards
+* Note titles
+* Note content preview
+* Subject labels
+* Search
+* Add/edit forms
+* Delete actions
+* Empty states
+
+Make notes easy to scan.
+
+7. SUBJECTS
+
+Improve:
+
+* Subject cards
+* Subject information
+* Task counts
+* Study-time information
+* Add/edit forms
+* Delete actions
+* Empty states
+
+8. STUDY SESSIONS
+
+Improve:
+
+* Timer interface
+* Start/pause/stop controls
+* Current session information
+* Subject selection
+* Previous sessions
+* Duration display
+* Empty states
+
+Make the timer visually prominent and easy to use.
+
+9. FORMS
+
+Create a consistent form design for the entire application:
+
+* Labels
+* Inputs
+* Textareas
+* Selects
+* Date inputs
+* Validation messages
+* Buttons
+* Focus states
+* Error states
+
+Ensure forms are easy to understand and accessible.
+
+10. MODALS
+
+Improve all modals so they have:
+
+* Clear title
+* Proper spacing
+* Consistent border radius
+* Appropriate shadow
+* Clear close action
+* Proper button placement
+* Mobile-friendly sizing
+
+11. BUTTONS
+
+Create consistent button styles for:
+
+* Primary actions
+* Secondary actions
+* Destructive actions
+* Icon buttons
+* Disabled states
+* Hover states
+* Focus states
+
+12. EMPTY AND ERROR STATES
+
+Make empty states useful and visually polished.
+
+Examples:
+
+* No tasks
+* No notes
+* No subjects
+* No study sessions
+
+Use helpful messaging and appropriate actions where existing functionality allows it.
+
+13. RESPONSIVE DESIGN
+
+Thoroughly review the application at:
+
+* Large desktop
+* Laptop
+* Tablet
+* Mobile
+
+Fix:
+
+* Horizontal overflow
+* Cards becoming too narrow
+* Forms exceeding viewport width
+* Long text breaking layouts
+* Sidebar problems
+* Navigation problems
+* Modal sizing
+* Button sizing
+* Table/list overflow
+* Poor spacing on small screens
+
+The application should remain usable on mobile without changing its functionality.
+
+14. ACCESSIBILITY
+
+Improve:
+
+* Color contrast
+* Keyboard focus states
+* Button labels
+* Form labels
+* Interactive element accessibility
+* Appropriate semantic HTML
+* Visible focus indicators
+
+Do not sacrifice accessibility for visual appearance.
+
+15. ANIMATIONS AND MICRO-INTERACTIONS
+
+Add only subtle animations where useful:
+
+* Button hover
+* Card hover
+* Modal appearance
+* Navigation transitions
+* Theme transition
+
+Avoid excessive animation.
+
+16. DARK/LIGHT THEME
+
+If the application already has theme functionality, visually refine both themes.
+
+If theme functionality does not exist, add a simple light/dark theme using the existing architecture without changing application functionality.
+
+Persist the selected theme using the existing localStorage approach where appropriate.
+
+Both themes should have:
+
+* Good contrast
+* Consistent surfaces
+* Readable text
+* Clear borders
+* Consistent buttons
+* Consistent form controls
+
+FINAL REQUIREMENTS:
+
+Before making changes, inspect the existing project.
+
+After making changes:
+
+* Run the application.
+* Check for compilation errors.
+* Check for console errors.
+* Make sure all existing routes still work.
+* Make sure existing functionality still works.
+* Do not remove any existing features.
+* Do not introduce unnecessary packages.
+
+Finally, provide me with a summary containing:
+
+1. Files changed.
+2. Major styling improvements.
+3. Responsive improvements.
+4. Accessibility improvements.
+5. Theme improvements.
+6. Any potential issues I should manually test.
+
+Remember: this is a final visual refinement of an already completed application, NOT a rewrite.

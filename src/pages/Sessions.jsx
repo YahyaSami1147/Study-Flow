@@ -43,9 +43,12 @@ function Sessions() {
 
   return (
     <div className="sessions-page">
-      <header className="sessions-header">
-        <h1>Study Sessions</h1>
-        <p className="muted">Total study time: {formatHMS(totalStudySeconds)}</p>
+      <header className="sessions-header page-hero">
+        <div>
+          <p className="eyebrow">Focus</p>
+          <h1>Study sessions</h1>
+          <p className="lede">Total study time: {formatHMS(totalStudySeconds)}</p>
+        </div>
       </header>
 
       <section className="session-control">

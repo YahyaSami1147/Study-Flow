@@ -13,8 +13,8 @@ function NoteItem({ note, subjects = [], onEdit, onDelete }) {
       </header>
       <section className="content">{note.content}</section>
       <footer className="card-actions">
-        <button onClick={onEdit}>Edit</button>
-        <button onClick={onDelete}>Delete</button>
+        <button type="button" className="btn-ghost" onClick={onEdit}>Edit</button>
+        <button type="button" className="btn-danger" onClick={onDelete}>Delete</button>
       </footer>
     </article>
   )

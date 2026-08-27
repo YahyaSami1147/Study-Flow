@@ -1,20 +1,20 @@
 import { useState } from 'react'
 
-function SubjectForm({ subject = null, onSave, onCancel }) {
+function SubjectForm({ subject = null, onSave, onCancel, onError }) {
   const [name, setName] = useState(subject?.name || '')
   const [description, setDescription] = useState(subject?.description || '')
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (!name.trim()) return alert('Subject name is required')
+    if (!name.trim()) return onError ? onError('Subject name is required') : null
     onSave({ ...(subject || {}), name: name.trim(), description: description.trim() })
   }
 
   return (
     <form className="subject-form" onSubmit={handleSubmit}>
       <div className="form-row">
-        <label>Name *</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} required />
+        <label htmlFor="subject-name">Name *</label>
+        <input id="subject-name" value={name} onChange={(e) => setName(e.target.value)} required />
       </div>
 
       <div className="form-row">

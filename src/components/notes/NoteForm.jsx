@@ -1,14 +1,14 @@
 import { useState } from 'react'
 
-function NoteForm({ note = null, subjects = [], onSave, onCancel }) {
+function NoteForm({ note = null, subjects = [], onSave, onCancel, onError }) {
   const [title, setTitle] = useState(note?.title || '')
   const [content, setContent] = useState(note?.content || '')
   const [subjectId, setSubjectId] = useState(note?.subjectId || '')
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (!title.trim()) return alert('Title is required')
-    if (!content.trim()) return alert('Content is required')
+    if (!title.trim()) return onError ? onError('Title is required') : null
+    if (!content.trim()) return onError ? onError('Content is required') : null
 
     const out = {
       ...(note || {}),
@@ -23,8 +23,8 @@ function NoteForm({ note = null, subjects = [], onSave, onCancel }) {
   return (
     <form className="note-form" onSubmit={handleSubmit}>
       <div className="form-row">
-        <label>Title *</label>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+        <label htmlFor="note-title">Title *</label>
+        <input id="note-title" value={title} onChange={(e) => setTitle(e.target.value)} required />
       </div>
 
       <div className="form-row">
@@ -33,8 +33,8 @@ function NoteForm({ note = null, subjects = [], onSave, onCancel }) {
       </div>
 
       <div className="form-row">
-        <label>Subject</label>
-        <select value={subjectId || ''} onChange={(e) => setSubjectId(e.target.value)}>
+        <label htmlFor="note-subject">Subject</label>
+        <select id="note-subject" value={subjectId || ''} onChange={(e) => setSubjectId(e.target.value)}>
           <option value="">None</option>
           {subjects.map((s) => (
             <option key={s.id} value={s.id}>{s.name}</option>

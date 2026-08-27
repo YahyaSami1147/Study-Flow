@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import storage, { ACTIVE_SESSION_KEY } from '../services/storage'
+import { makeId } from '../lib/id'
 
 function nowSeconds() {
   return Math.floor(Date.now() / 1000)
@@ -71,7 +72,7 @@ export default function useStudyTimer() {
     if (!intervalRef.current) {
       intervalRef.current = setInterval(() => setSeconds((s) => s + 1), 1000)
     }
-  }, [active])
+  }, [])
 
   const pause = useCallback(() => {
     const current = activeRef.current
@@ -87,7 +88,7 @@ export default function useStudyTimer() {
       clearInterval(intervalRef.current)
       intervalRef.current = null
     }
-  }, [active])
+  }, [])
 
   const resume = useCallback(() => {
     const current = activeRef.current
@@ -99,7 +100,7 @@ export default function useStudyTimer() {
     if (!intervalRef.current) {
       intervalRef.current = setInterval(() => setSeconds((s) => s + 1), 1000)
     }
-  }, [active])
+  }, [])
 
   const stop = useCallback(() => {
     const current = activeRef.current
@@ -112,7 +113,7 @@ export default function useStudyTimer() {
     }
     // build completed session
     const session = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      id: makeId(),
       subjectId: current.subjectId || null,
       durationSeconds: total,
       startedAt: current.startedAt,

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function TaskForm({ task = null, subjects = [], onSave, onCancel }) {
+function TaskForm({ task = null, subjects = [], onSave, onCancel, onError }) {
   const [title, setTitle] = useState(task?.title || '')
   const [description, setDescription] = useState(task?.description || '')
   const [subjectId, setSubjectId] = useState(task?.subjectId || '')
@@ -10,7 +10,7 @@ function TaskForm({ task = null, subjects = [], onSave, onCancel }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (!title.trim()) return alert('Title is required')
+    if (!title.trim()) return onError ? onError('Title is required') : null
 
     const out = {
       ...(task || {}),
@@ -27,8 +27,8 @@ function TaskForm({ task = null, subjects = [], onSave, onCancel }) {
   return (
     <form className="task-form" onSubmit={handleSubmit}>
       <div className="form-row">
-        <label>Title *</label>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+        <label htmlFor="task-title">Title *</label>
+        <input id="task-title" value={title} onChange={(e) => setTitle(e.target.value)} required />
       </div>
 
       <div className="form-row">
@@ -37,8 +37,8 @@ function TaskForm({ task = null, subjects = [], onSave, onCancel }) {
       </div>
 
       <div className="form-row">
-        <label>Subject</label>
-        <select value={subjectId || ''} onChange={(e) => setSubjectId(e.target.value)}>
+        <label htmlFor="task-subject">Subject</label>
+        <select id="task-subject" value={subjectId || ''} onChange={(e) => setSubjectId(e.target.value)}>
           <option value="">None</option>
           {subjects.map((s) => (
             <option key={s.id} value={s.id}>{s.name}</option>

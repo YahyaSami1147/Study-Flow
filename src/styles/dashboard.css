@@ -1,59 +1,99 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 28px;
 }
-.dashboard-header {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.muted {
-  color: var(--text);
-}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
+
 .progress-card {
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  padding: 12px;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 18px;
+  border-radius: var(--card-radius);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
 }
-.progress {
-  width: 100%;
-  height: 12px;
+
+.ring {
+  --p: 0;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(var(--color-primary) calc(var(--p) * 1%), var(--color-surface-2) 0);
+  box-shadow: inset 0 0 0 1px var(--color-border);
 }
+
+.ring span {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-surface);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.progress-copy {
+  min-width: 0;
+}
+
+.progress-copy .stat-title {
+  margin-bottom: 6px;
+}
+
 .lists {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 14px;
 }
+
+.recent-list {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-radius);
+  padding: 18px;
+  min-height: 220px;
+  box-shadow: var(--shadow-sm);
+}
+
 .recent-list h3 {
-  margin: 0 0 8px 0;
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
 }
+
 .recent-list ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.recent-list .empty {
-  color: var(--text);
+
+.recent-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
 }
-.small {
-  font-size: 13px;
-  color: var(--text);
+
+.recent-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 @media (max-width: 900px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .stats-grid,
   .lists {
     grid-template-columns: 1fr;
   }

@@ -6,7 +6,6 @@ import Notes from './pages/Notes'
 import Sessions from './pages/Sessions'
 import Subjects from './pages/Subjects'
 import Settings from './pages/Settings'
-import './App.css'
 
 function App() {
   return (

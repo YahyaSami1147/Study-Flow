@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
+import { useConfirm } from '../components/ui/ConfirmModal'
 import storage, { TASKS_KEY, SUBJECTS_KEY } from '../services/storage'
 import { makeId } from '../lib/id'
 import useLocalStorage from '../hooks/useLocalStorage'
@@ -21,13 +22,20 @@ function Tasks() {
   const [sortBy, setSortBy] = useState('dueDate')
 
   const [message, setMessage] = useState('')
+  const messageRef = useRef(null)
+  const confirm = useConfirm()
 
   // persistence is handled by useLocalStorage
 
   function showMessage(text) {
     setMessage(text)
-    setTimeout(() => setMessage(''), 3000)
+    if (messageRef.current) clearTimeout(messageRef.current)
+    messageRef.current = setTimeout(() => setMessage(''), 3000)
   }
+
+  useEffect(() => {
+    return () => { if (messageRef.current) clearTimeout(messageRef.current) }
+  }, [])
 
   function handleCreate() {
     setEditingTask(null)
@@ -66,9 +74,12 @@ function Tasks() {
   }
 
   function handleDelete(taskId) {
-    if (!confirm('Delete this task?')) return
-    setTasks((prev) => prev.filter((t) => t.id !== taskId))
-    showMessage('Task deleted')
+    // show confirm modal
+    confirm('Delete this task?').then((ok) => {
+      if (!ok) return
+      setTasks((prev) => prev.filter((t) => t.id !== taskId))
+      showMessage('Task deleted')
+    })
   }
 
   function handleToggleComplete(taskId) {
@@ -102,8 +113,11 @@ function Tasks() {
 
   return (
     <div className="tasks-page">
-      <header className="tasks-header">
-        <h1>Tasks</h1>
+      <header className="tasks-header page-hero">
+        <div>
+          <p className="eyebrow">Work</p>
+          <h1>Tasks</h1>
+        </div>
         <div className="actions">
           <button onClick={handleCreate} className="primary">New Task</button>
         </div>
@@ -174,6 +188,7 @@ function Tasks() {
             subjects={subjects}
             onCancel={() => { setIsCreating(false); setEditingTask(null) }}
             onSave={handleSave}
+            onError={showMessage}
           />
         </div>
       )}

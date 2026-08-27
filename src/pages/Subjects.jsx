@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
+import { useConfirm } from '../components/ui/ConfirmModal'
 import storage, { SUBJECTS_KEY, TASKS_KEY, NOTES_KEY, SESSIONS_KEY } from '../services/storage'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { makeId } from '../lib/id'
@@ -16,13 +17,20 @@ function Subjects() {
   const [editing, setEditing] = useState(null)
   const [query, setQuery] = useState('')
   const [message, setMessage] = useState('')
+  const messageRef = useRef(null)
+  const confirm = useConfirm()
 
   // persistence handled by useLocalStorage
 
   function showMessage(text) {
     setMessage(text)
-    setTimeout(() => setMessage(''), 3000)
+    if (messageRef.current) clearTimeout(messageRef.current)
+    messageRef.current = setTimeout(() => setMessage(''), 3000)
   }
+
+  useEffect(() => {
+    return () => { if (messageRef.current) clearTimeout(messageRef.current) }
+  }, [])
 
   function handleCreate() {
     setEditing(null)
@@ -66,23 +74,28 @@ function Subjects() {
     if (relatedTasks.length || relatedNotes.length || relatedSessions.length) {
       confirmMsg += `\nThis will dissociate ${relatedTasks.length} tasks, ${relatedNotes.length} notes, and ${relatedSessions.length} sessions.`
     }
-    if (!confirm(confirmMsg)) return
+    confirm(confirmMsg).then((ok) => {
+      if (!ok) return
 
-    // Remove subject and clear references
-    setSubjects((prev) => prev.filter((s) => s.id !== id))
-    if (relatedTasks.length) setTasks((prev) => prev.map((t) => (t.subjectId === id ? { ...t, subjectId: null } : t)))
-    if (relatedNotes.length) setNotes((prev) => prev.map((n) => (n.subjectId === id ? { ...n, subjectId: null } : n)))
-    if (relatedSessions.length) setSessions((prev) => prev.map((ss) => (ss.subjectId === id ? { ...ss, subjectId: null } : ss)))
+      // Remove subject and clear references
+      setSubjects((prev) => prev.filter((s) => s.id !== id))
+      if (relatedTasks.length) setTasks((prev) => prev.map((t) => (t.subjectId === id ? { ...t, subjectId: null } : t)))
+      if (relatedNotes.length) setNotes((prev) => prev.map((n) => (n.subjectId === id ? { ...n, subjectId: null } : n)))
+      if (relatedSessions.length) setSessions((prev) => prev.map((ss) => (ss.subjectId === id ? { ...ss, subjectId: null } : ss)))
 
-    showMessage('Subject deleted and references cleared')
+      showMessage('Subject deleted and references cleared')
+    })
   }
 
   const filtered = subjects.filter((s) => s.name.toLowerCase().includes(query.trim().toLowerCase()))
 
   return (
     <div className="subjects-page">
-      <header className="subjects-header">
-        <h1>Subjects</h1>
+      <header className="subjects-header page-hero">
+        <div>
+          <p className="eyebrow">Library</p>
+          <h1>Subjects</h1>
+        </div>
         <div className="actions">
           <button onClick={handleCreate} className="primary">New Subject</button>
         </div>
@@ -111,7 +124,7 @@ function Subjects() {
 
       {isCreating && (
         <div className="subject-form-wrap">
-          <SubjectForm key={editing ? editing.id : 'new'} subject={editing} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} />
+          <SubjectForm key={editing ? editing.id : 'new'} subject={editing} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} onError={showMessage} />
         </div>
       )}
 

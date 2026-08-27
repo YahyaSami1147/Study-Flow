@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
+import { useConfirm } from '../components/ui/ConfirmModal'
 import storage, { NOTES_KEY, SUBJECTS_KEY } from '../services/storage'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { makeId } from '../lib/id'
@@ -14,13 +15,20 @@ function Notes() {
   const [editing, setEditing] = useState(null)
   const [isCreating, setIsCreating] = useState(false)
   const [message, setMessage] = useState('')
+  const messageRef = useRef(null)
+  const confirm = useConfirm()
 
   // persistence handled by useLocalStorage
 
   function showMessage(text) {
     setMessage(text)
-    setTimeout(() => setMessage(''), 3000)
+    if (messageRef.current) clearTimeout(messageRef.current)
+    messageRef.current = setTimeout(() => setMessage(''), 3000)
   }
+
+  useEffect(() => {
+    return () => { if (messageRef.current) clearTimeout(messageRef.current) }
+  }, [])
 
   function handleCreate() {
     setEditing(null)
@@ -51,9 +59,11 @@ function Notes() {
   }
 
   function handleDelete(id) {
-    if (!confirm('Delete this note?')) return
-    setNotes((prev) => prev.filter((n) => n.id !== id))
-    showMessage('Note deleted')
+    confirm('Delete this note?').then((ok) => {
+      if (!ok) return
+      setNotes((prev) => prev.filter((n) => n.id !== id))
+      showMessage('Note deleted')
+    })
   }
 
   const filtered = useMemo(() => {
@@ -67,8 +77,11 @@ function Notes() {
 
   return (
     <div className="notes-page">
-      <header className="notes-header">
-        <h1>Notes</h1>
+      <header className="notes-header page-hero">
+        <div>
+          <p className="eyebrow">Writing</p>
+          <h1>Notes</h1>
+        </div>
         <div className="actions">
           <button onClick={handleCreate} className="primary">New Note</button>
         </div>
@@ -90,7 +103,7 @@ function Notes() {
 
       {isCreating && (
         <div className="note-form-wrap">
-          <NoteForm key={editing ? editing.id : 'new'} note={editing} subjects={subjects} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} />
+          <NoteForm key={editing ? editing.id : 'new'} note={editing} subjects={subjects} onSave={handleSave} onCancel={() => { setIsCreating(false); setEditing(null) }} onError={showMessage} />
         </div>
       )}
 

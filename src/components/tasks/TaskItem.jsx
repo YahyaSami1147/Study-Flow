@@ -11,7 +11,7 @@ function TaskItem({ task, subjects = [], onEdit, onDelete, onToggleComplete }) {
         <div className="title-row">
           <div className="title">{task.title}</div>
           <div className="meta">
-            <span className="priority">{task.priority || 'low'}</span>
+            <span className={`priority priority-${task.priority || 'low'}`}>{task.priority || 'low'}</span>
             {task.dueDate && <span className="due">Due {new Date(task.dueDate).toLocaleString()}</span>}
             <span className="subject">{subjectName}</span>
           </div>
@@ -19,8 +19,8 @@ function TaskItem({ task, subjects = [], onEdit, onDelete, onToggleComplete }) {
         {task.description && <div className="description">{task.description}</div>}
       </div>
       <div className="actions">
-        <button onClick={onEdit}>Edit</button>
-        <button onClick={onDelete}>Delete</button>
+        <button type="button" className="btn-ghost" onClick={onEdit}>Edit</button>
+        <button type="button" className="btn-danger" onClick={onDelete}>Delete</button>
       </div>
     </div>
   )
