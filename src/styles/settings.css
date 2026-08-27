@@ -74,3 +74,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+.danger-row {
+  margin-top: 18px;
+  align-items: center;
+}
+
+.btn-danger {
+  background: linear-gradient(180deg, #ff6b6b, #ef4444);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-danger:hover {
+  filter: brightness(0.95);
+}

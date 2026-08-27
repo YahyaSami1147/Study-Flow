@@ -13,9 +13,9 @@
   justify-content: space-between;
   padding: 0 28px;
   border-bottom: 1px solid transparent;
-  background: color-mix(in srgb, var(--color-surface) 86%, var(--color-primary) 6%);
-  backdrop-filter: blur(6px) saturate(120%);
-  box-shadow: 0 6px 18px rgba(15,23,36,0.04);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 98%, var(--color-bg)), color-mix(in srgb, var(--color-bg) 96%, transparent));
+  backdrop-filter: blur(6px) saturate(110%);
+  box-shadow: 0 6px 18px rgba(16,22,34,0.03);
 }
 
 .brand {
@@ -53,17 +53,24 @@
   inset: 0;
   display: grid;
   place-items: center;
-  background: linear-gradient(180deg, rgba(2,6,23,0.18), rgba(2,6,23,0.22));
+  background: color-mix(in srgb, var(--color-overlay) 72%, transparent);
   z-index: 100;
   padding: 28px;
 }
 .modal-card {
-  width: min(820px, calc(100vw - 48px));
-  background: color-mix(in srgb, var(--color-surface) 98%, transparent);
-  border: 1px solid var(--color-border);
-  padding: 20px;
-  border-radius: 18px;
-  box-shadow: var(--shadow-lg);
+  width: min(880px, calc(100vw - 48px));
+  background: var(--color-surface);
+  border: 1px solid color-mix(in srgb, var(--color-border) 90%, var(--color-surface));
+  padding: 22px;
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-md);
+  transform-origin: center center;
+  animation: modal-in var(--motion-medium) cubic-bezier(0.2,0,0,1);
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.995) }
+  to { opacity: 1; transform: translateY(0) scale(1) }
 }
 
 .top-actions {
@@ -98,8 +105,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  border-radius: 12px;
-  font-weight: 500;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .sidebar a svg {
@@ -111,7 +118,8 @@
 
 .sidebar a.active {
   color: var(--color-text);
-  background: var(--nav-active);
+  background: color-mix(in srgb, var(--nav-active) 80%, var(--color-surface));
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--color-primary) 6%, transparent);
 }
 
 .sidebar a.active svg {

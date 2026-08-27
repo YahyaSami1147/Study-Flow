@@ -102,6 +102,8 @@
   margin-bottom: 12px;
   background: linear-gradient(180deg, var(--color-surface), color-mix(in srgb, var(--color-surface) 96%, transparent));
   box-shadow: var(--shadow-sm);
+  transform-origin: top center;
+  animation: card-in var(--motion-medium) cubic-bezier(0.2,0,0,1);
 }
 
 .task-item.done .title {

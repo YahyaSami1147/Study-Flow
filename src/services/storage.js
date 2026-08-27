@@ -61,6 +61,20 @@ export function saveSessions(sessions) {
   localStorage.setItem(SESSIONS_KEY, JSON.stringify(sessions))
 }
 
+export function resetAll() {
+  try {
+    localStorage.removeItem(TASKS_KEY)
+    localStorage.removeItem(SUBJECTS_KEY)
+    localStorage.removeItem(SESSIONS_KEY)
+    localStorage.removeItem(NOTES_KEY)
+    localStorage.removeItem(ACTIVE_SESSION_KEY)
+    // Also remove theme preference to restore default appearance
+    localStorage.removeItem('theme')
+  } catch {
+    /* ignore */
+  }
+}
+
 export default {
   getTasks,
   saveTasks,
@@ -72,6 +86,7 @@ export default {
   saveSessions,
   getActiveSession,
   saveActiveSession,
+  resetAll,
   TASKS_KEY,
   SUBJECTS_KEY,
   SESSIONS_KEY,

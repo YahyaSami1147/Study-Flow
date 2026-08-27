@@ -668,3 +668,39 @@ Finally, provide me with a summary containing:
 6. Any potential issues I should manually test.
 
 Remember: this is a final visual refinement of an already completed application, NOT a rewrite.
+
+
+Final Prompt 
+Create a professional README.md for the StudyFlow React project.
+
+The README must document:
+
+1. Project title.
+2. Project overview.
+3. Purpose of the application.
+4. Features.
+5. Technology stack.
+6. Installation instructions.
+7. How to run the project locally.
+8. Project structure.
+9. Data persistence approach.
+10. AI-assisted development workflow.
+11. Examples of prompts used with GitHub Copilot.
+12. Examples of AI-generated implementation.
+13. Examples of manual corrections or refactoring I performed after reviewing AI-generated code.
+14. Testing performed.
+15. Known limitations.
+16. Future improvements.
+
+Important:
+
+Do not claim that AI performed work that it did not perform.
+
+Clearly distinguish between:
+
+* AI-generated code or suggestions.
+* My own manual decisions.
+* My manual corrections/refactoring.
+* Testing and verification I performed.
+
+Keep the documentation honest and suitable for an academic assignment reviewer.
