@@ -1,3 +1,4 @@
+Prompt: 1
 I want to build a React application called "StudyFlow", a modern student productivity dashboard.
 
 This is an academic assignment where I am using AI as a development assistant, so I want the implementation to be clean, understandable, maintainable, and easy for me to review and modify manually.
@@ -49,3 +50,122 @@ Then create the project structure and implement only the initial application she
 Do not implement every feature yet.
 
 After implementation, explain which files were created and what each file is responsible for.
+
+
+Prompt 2
+Continue working on the existing StudyFlow React project.
+
+Do not rewrite or unnecessarily modify existing working components.
+
+Implement the Dashboard page.
+
+The dashboard should display:
+
+Total tasks
+Completed tasks
+Pending tasks
+Total study time
+Number of active subjects
+Recent tasks
+Upcoming tasks
+Recent study sessions
+A simple productivity/progress visualization
+
+Use the existing application state and localStorage architecture.
+
+Requirements:
+
+Do not use fake statistics if real application data is available.
+Calculate statistics from the stored task, subject, and study-session data.
+Create reusable components for statistic cards and dashboard sections.
+Handle empty states gracefully.
+Make the dashboard responsive.
+Avoid duplicated calculations.
+Keep the UI accessible.
+Do not introduce unnecessary dependencies.
+
+Before coding, inspect the existing state management and data structures and adapt to them rather than creating a second competing data structure.
+
+After implementing the feature, explain the important design decisions and identify areas where I should manually review the generated code.
+
+Prompt 3
+Implement the Tasks feature in the existing StudyFlow React application.
+
+Users must be able to:
+
+* Create a task.
+* Edit a task.
+* Delete a task.
+* Mark a task as completed.
+* Set a due date.
+* Set a priority.
+* Assign a subject.
+* Search tasks.
+* Filter by status.
+* Filter by priority.
+* Sort tasks by due date or priority.
+
+Task fields:
+
+* id
+* title
+* description
+* subjectId
+* priority
+* dueDate
+* completed
+* createdAt
+
+Requirements:
+
+* Use React state/hooks appropriately.
+* Persist changes through the existing localStorage/data layer.
+* Validate required fields.
+* Prevent empty task titles.
+* Provide useful feedback after actions.
+* Use reusable TaskForm and TaskItem components where appropriate.
+* Avoid putting all task logic inside one component.
+* Make the feature responsive.
+* Handle the case where a task references a subject that no longer exists.
+* Do not break existing Dashboard functionality.
+
+Before implementation, inspect the existing project structure and reuse existing components/utilities wherever possible.
+
+After implementation, review the code for duplicated logic, unnecessary state, and components that should be split.
+
+Prompt 4
+
+Implement the Notes feature for StudyFlow.
+
+Users should be able to:
+
+* Create notes.
+* Edit notes.
+* Delete notes.
+* Search notes.
+* Assign notes to subjects.
+* View notes in a clean card/list layout.
+
+Each note should contain:
+
+* id
+* title
+* content
+* subjectId
+* createdAt
+* updatedAt
+
+Requirements:
+
+* Persist notes using the existing localStorage architecture.
+* Validate the title and content.
+* Display an appropriate empty state.
+* Add search functionality.
+* Allow users to edit existing notes.
+* Keep the UI responsive.
+* Reuse existing modal, button, input, card, and form components where appropriate.
+* Do not duplicate functionality that already exists elsewhere in the application.
+
+Keep the implementation simple and maintainable.
+
+After implementation, inspect the code and identify any areas where manual refactoring would improve readability or maintainability.
