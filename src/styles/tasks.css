@@ -19,8 +19,8 @@
 }
 
 .tasks-controls .search {
-  flex: 1 1 420px;
-  min-width: 180px;
+  flex: 1 1 320px;
+  min-width: 140px;
 }
 
 .filter-group { display:flex; gap:8px; align-items:center }
@@ -197,5 +197,30 @@
 
   .tasks-aside {
     width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .tasks-controls {
+    align-items: stretch;
+  }
+
+  .tasks-controls .search {
+    flex: 1 1 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .filter-group {
+    width: 100%;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-group .dropdown,
+  .tasks-controls > .dropdown {
+    flex: 1 1 140px;
+    min-width: 0;
+    width: auto;
   }
 }

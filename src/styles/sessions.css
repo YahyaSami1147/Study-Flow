@@ -80,6 +80,31 @@
   .session-control { width:100%; }
 }
 
+@media (max-width: 640px) {
+  .control-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .control-row label {
+    min-width: 0;
+    margin-bottom: 6px;
+  }
+
+  .session-control .dropdown {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .control-actions {
+    flex-wrap: wrap;
+  }
+
+  .control-actions button {
+    flex: 1 1 auto;
+  }
+}
+
 /* ensure dropdown fits nicely in control row */
 .session-control .dropdown { min-width: 220px; }
 .control-actions .primary { padding: 10px 16px; font-weight:700 }
