@@ -6,7 +6,17 @@ export const ACTIVE_SESSION_KEY = 'studyflow_active_session'
 
 function safeParse(value, fallback) {
   try {
-    return JSON.parse(value) ?? fallback
+    if (value == null) return fallback
+
+    const parsed = JSON.parse(value)
+    if (parsed == null) return fallback
+
+    if (Array.isArray(fallback) && !Array.isArray(parsed)) return fallback
+    if (typeof fallback === 'object' && fallback !== null && !Array.isArray(fallback) && (typeof parsed !== 'object' || Array.isArray(parsed))) {
+      return fallback
+    }
+
+    return parsed
   } catch {
     return fallback
   }
@@ -63,13 +73,7 @@ export function saveSessions(sessions) {
 
 export function resetAll() {
   try {
-    localStorage.removeItem(TASKS_KEY)
-    localStorage.removeItem(SUBJECTS_KEY)
-    localStorage.removeItem(SESSIONS_KEY)
-    localStorage.removeItem(NOTES_KEY)
-    localStorage.removeItem(ACTIVE_SESSION_KEY)
-    // Also remove theme preference to restore default appearance
-    localStorage.removeItem('theme')
+    localStorage.clear()
   } catch {
     /* ignore */
   }

@@ -1,10 +1,24 @@
 import { useState, useEffect, useCallback } from 'react'
 
+function isValidStoredValue(value, fallback) {
+  if (value == null) return false
+  if (Array.isArray(fallback)) return Array.isArray(value)
+  if (typeof fallback === 'object') return typeof value === 'object' && !Array.isArray(value)
+  return true
+}
+
 export default function useLocalStorage(key, initialValue) {
   const read = useCallback(() => {
     try {
       const raw = localStorage.getItem(key)
-      return raw ? JSON.parse(raw) : initialValue
+      if (raw == null) return initialValue
+
+      const parsed = JSON.parse(raw)
+      if (!isValidStoredValue(parsed, initialValue)) {
+        return initialValue
+      }
+
+      return parsed
     } catch {
       return initialValue
     }
